@@ -1,5 +1,5 @@
 # Example of custom Java runtime using jlink in a multi-stage container build
-FROM openjdk:11 as build
+FROM eclipse-temurin:11-jdk as build
 COPY src /home/app/src
 COPY pom.xml /home/app
 RUN mvn -f /home/app/pom.xml clean package
