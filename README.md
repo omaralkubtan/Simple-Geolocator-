@@ -25,7 +25,7 @@ The application uses a PostgreSQL database and the data configuration is set via
 
 ## Deployment
 
-The application is containerized using Docker and can be deployed using the Render hosting service. In Render, you can set the environment variables and run the application.
+The application is containerized using Docker and can be deployed using the Render hosting service. In [Render](https://render.com/), you can set the environment variables and run the application.
 
 ## Contributing
 
