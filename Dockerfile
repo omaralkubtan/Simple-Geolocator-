@@ -1,17 +1,22 @@
-# Start with a base image containing Java runtime (OpenJDK 20)
-FROM openjdk:20-jdk-alpine
+# Example of custom Java runtime using jlink in a multi-stage container build
+FROM eclipse-temurin:11 as jre-build
 
-# Add Maintainer Info
-LABEL maintainer="omarquptan@gmail.com"
+# Create a custom Java runtime
+RUN $JAVA_HOME/bin/jlink \
+         --add-modules java.base \
+         --strip-debug \
+         --no-man-pages \
+         --no-header-files \
+         --compress=2 \
+         --output /javaruntime
 
-# Make port 8080 available to the world outside this container
-EXPOSE 8080
+# Define your base image
+FROM debian:buster-slim
+ENV JAVA_HOME=/opt/java/openjdk
+ENV PATH "${JAVA_HOME}/bin:${PATH}"
+COPY --from=jre-build /javaruntime $JAVA_HOME
 
-# The application's jar file
-ARG JAR_FILE=target/geolocator-0.0.1-SNAPSHOT.jar
-
-# Add the application's jar to the container
-ADD ${JAR_FILE} geolocator.jar
-
-# Run the jar file
-ENTRYPOINT ["java","-jar","/geolocator.jar"]
+# Continue with your application deployment
+RUN mkdir /opt/app
+COPY japp.jar /opt/app
+CMD ["java", "-jar", "/opt/app/japp.jar"]
