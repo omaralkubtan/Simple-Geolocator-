@@ -18,5 +18,5 @@ COPY --from=jre-build /javaruntime $JAVA_HOME
 
 # Continue with your application deployment
 RUN mkdir /opt/app
-COPY geolocator-0.0.1-SNAPSHOT.jar /opt/app
+COPY target/geolocator-0.0.1-SNAPSHOT.jar /opt/app
 CMD ["java", "-jar", "/opt/app/geolocator-0.0.1-SNAPSHOT.jar"]
