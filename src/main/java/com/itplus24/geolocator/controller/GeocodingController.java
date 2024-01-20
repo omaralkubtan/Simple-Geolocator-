@@ -27,7 +27,7 @@ public class GeocodingController {
         return mapper.map(geocodingService.search(query), GeoLocationDto.class);
     }
 
-    @PostMapping("/search")
+    @PostMapping("/send")
     @Validated
     public void sendResult(@Valid @RequestBody SendResultDto request) {
         geocodingService.sendGeoLocationEmail(request.getLocation(), request.getEmail());
