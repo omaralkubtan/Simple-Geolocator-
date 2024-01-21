@@ -11,7 +11,7 @@ FROM openjdk:20
 
 COPY --from=maven_build $JAR_FILE /geolocator.jar
 
-RUN chmod +x /geolocator.jar
+#RUN chmod +x /geolocator.jar
 
 # Add Maintainer Info
 LABEL maintainer="omarquptan@gmail.com"
