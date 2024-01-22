@@ -1,9 +1,8 @@
 FROM maven:3.8.7-openjdk-18-slim as maven_build
 COPY pom.xml pom.xml
-RUN #mvn install
 
 COPY src src
-RUN mvn package
+RUN mvn compile
 # The application's jar file
 ARG JAR_FILE=target/geolocator-0.0.1-SNAPSHOT.jar
 
@@ -16,8 +15,14 @@ RUN chmod +x /geolocator.jar
 # Add Maintainer Info
 LABEL maintainer="omarquptan@gmail.com"
 
-# Make port 8080 available to the world outside this container
+# Make port 9000 available to the world outside this container
 EXPOSE 9000
+
+# Set environment variables
 ENV DB_HOST=host.docker.internal
+ENV DATABASE_URL;
+ENV DATABASE_USERNAME;
+ENV DATABASE_PASSWORD;
+
 # Run the jar file
 ENTRYPOINT ["java","-jar","/geolocator.jar"]
